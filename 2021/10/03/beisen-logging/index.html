@@ -6,13 +6,15 @@
   
   <title>beisen logging | 雨</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="article">
+  <meta name="description" content="项目简介1.Beisen.Logging是北森的基础服务组件。以SDK的方式提供给业务线做日志打印和调用。 2.Beisen.Logging的日志打印集成了文件落地，分布式应用的日志集成，提供将日志存储至ES，并通过ET查看日志信息 日志存储的关键节点分析1.日志的存储日志存储分为两部分。 1.1本地文件落盘1Beisen.Logging的日志文件落盘存储，通过Log4Net进行日志的落地写入">
+<meta property="og:type" content="article">
 <meta property="og:title" content="beisen logging">
 <meta property="og:url" content="http://example.com/2021/10/03/beisen-logging/index.html">
 <meta property="og:site_name" content="雨">
+<meta property="og:description" content="项目简介1.Beisen.Logging是北森的基础服务组件。以SDK的方式提供给业务线做日志打印和调用。 2.Beisen.Logging的日志打印集成了文件落地，分布式应用的日志集成，提供将日志存储至ES，并通过ET查看日志信息 日志存储的关键节点分析1.日志的存储日志存储分为两部分。 1.1本地文件落盘1Beisen.Logging的日志文件落盘存储，通过Log4Net进行日志的落地写入">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-10-02T16:43:45.000Z">
-<meta property="article:modified_time" content="2021-10-02T16:43:45.139Z">
+<meta property="article:modified_time" content="2021-10-02T16:54:39.405Z">
 <meta property="article:author" content="junjie cheng">
 <meta name="twitter:card" content="summary">
   
@@ -59,12 +61,12 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Buscar"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
       </div>
     </div>
   </div>
@@ -93,11 +95,57 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h1 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h1><p>1.Beisen.Logging是北森的基础服务组件。以SDK的方式提供给业务线做日志打印和调用。</p>
+<p>2.Beisen.Logging的日志打印集成了文件落地，分布式应用的日志集成，提供将日志存储至ES，并通过ET查看日志信息</p>
+<h1 id="日志存储的关键节点分析"><a href="#日志存储的关键节点分析" class="headerlink" title="日志存储的关键节点分析"></a>日志存储的关键节点分析</h1><h5 id="1-日志的存储"><a href="#1-日志的存储" class="headerlink" title="1.日志的存储"></a>1.日志的存储</h5><p>日志存储分为两部分。</p>
+<h6 id="1-1本地文件落盘"><a href="#1-1本地文件落盘" class="headerlink" title="1.1本地文件落盘"></a>1.1本地文件落盘</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Beisen.Logging的日志文件落盘存储，通过Log4Net进行日志的落地写入</span><br></pre></td></tr></table></figure>
+
+<p><a href="./logging,production.config">Log4Net配置文件内容</a></p>
+<p><a href="./LoggingConfig.xml">Apollo远程配置内容</a></p>
+<p>日志文件存储位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\beisen.logfiles\$ApplicationName</span><br></pre></td></tr></table></figure>
+
+<h6 id="1-2分布式日志存储-ET"><a href="#1-2分布式日志存储-ET" class="headerlink" title="1.2分布式日志存储(ET)"></a>1.2分布式日志存储(ET)</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">日志输出通过调用 LogCollector.XXX方法，将日志异步输出到ET平台</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ET日志级别包括：Fatal、Error、Warn、Info、Debug、ErrorTrace</span><br></pre></td></tr></table></figure>
+
+<h6 id="1-2-1日志信息包装"><a href="#1-2-1日志信息包装" class="headerlink" title="1.2.1日志信息包装"></a>1.2.1日志信息包装</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">日志信息将message、线程id、sessionId、applicantionName、租户id、用户id、机器信息、时间信息、traceId（携带http trace则记录入口traceId）</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http请求携带入参和基本请求头信息</span><br></pre></td></tr></table></figure>
+
+<h6 id="1-2-2将日志写入线程安全队列-ConcurrentQueue-lt-LoggingEntity-gt"><a href="#1-2-2将日志写入线程安全队列-ConcurrentQueue-lt-LoggingEntity-gt" class="headerlink" title="1.2.2将日志写入线程安全队列 ConcurrentQueue&lt;LoggingEntity&gt;"></a>1.2.2将日志写入线程安全队列 <code>ConcurrentQueue&lt;LoggingEntity&gt;</code></h6><h6 id="1-2-3开启多个线程，消费队列内日志信息"><a href="#1-2-3开启多个线程，消费队列内日志信息" class="headerlink" title="1.2.3开启多个线程，消费队列内日志信息"></a>1.2.3开启多个线程，消费队列内日志信息</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Enumerable.Range(<span class="number">0</span>, handlers).ToList().ForEach(_ =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">var</span> work = CreateThread(name + _.ToString(), () =&gt;</span><br><span class="line">                  &#123;</span><br><span class="line">                      <span class="keyword">while</span> (<span class="keyword">true</span>)</span><br><span class="line">                      &#123;</span><br><span class="line">                          <span class="keyword">if</span> (_queue.TryDequeue(out LoggingEntity loggingEntity))</span><br><span class="line">                          &#123;</span><br><span class="line">                              Do(loggingEntity);</span><br><span class="line">                          &#125;</span><br><span class="line">                          <span class="keyword">else</span></span><br><span class="line">                          &#123;</span><br><span class="line">                              Thread.Sleep(<span class="number">1</span>);</span><br><span class="line">                          &#125;</span><br><span class="line">                      &#125;</span><br><span class="line">                  &#125;);</span><br><span class="line">                work.Start();</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">消费队列内日志信息时，将日志信息推送到kafka，不同类型的日志，发送不同Topic</span><br></pre></td></tr></table></figure>
+
+<h6 id="1-2-4Topic消费"><a href="#1-2-4Topic消费" class="headerlink" title="1.2.4Topic消费"></a>1.2.4Topic消费</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">不同Topic启动不同的windows服务，进行日志消息消费</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">每个windows service 中处理分为三部分</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1、consumer消费kafka，并将对应日志加入BlockingCollection</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BlockingCollection&lt;DebugPackageInfo&gt;.AddToAny(ChannelCollections, <span class="keyword">package</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2、channel， 从BlockingCollection取出日志信息，添加到package消息包中，当消息达到一定数量，写入处理消息组</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">_collectTask = <span class="keyword">new</span> Task(() =&gt;</span><br><span class="line">           &#123;</span><br><span class="line">               <span class="keyword">while</span> (!cancellationToken.Token.IsCancellationRequested)</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="keyword">var</span> index = BlockingCollection&lt;T&gt;.TryTakeFromAny(_dataChannels, out T obj, <span class="number">5</span>);</span><br><span class="line">                   <span class="keyword">if</span> (obj != <span class="keyword">null</span>)</span><br><span class="line">                   &#123;</span><br><span class="line">                       <span class="keyword">package</span>.Add(obj);</span><br><span class="line">                       Interlocked.Increment(ref _count);</span><br><span class="line">                       <span class="keyword">if</span> (_count &gt;= MaxPackageSize || _overtime)</span><br><span class="line">                       &#123;</span><br><span class="line">                           handler(<span class="keyword">package</span>);</span><br><span class="line">                           <span class="keyword">package</span>.Clear();</span><br><span class="line">                           _count = <span class="number">0</span>;</span><br><span class="line">                           _overtime = <span class="keyword">false</span>;</span><br><span class="line">                       &#125;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;, cancellationToken.Token);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3、sinkAction，批量将日志内容写入到ES中</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var debugEntities = packages.Select(s =&gt; s.DebugEntity).ToList();</span><br><span class="line">                 var lastDate = Convert.ToDateTime(debugEntities[0].LogDate);</span><br><span class="line">                 debugEntities.ForEach(entity =&gt;</span><br><span class="line">                 &#123;</span><br><span class="line">                     entity.LogDate = Convert.ToDateTime(entity.LogDate).ToUniversalTime().ToString(&quot;yyyy-MM-ddTHH:mm:ss.fff&quot;);</span><br><span class="line">                     var logTag = LogTagFetcher.Fetch(entity);</span><br><span class="line">                     entity.LogLevel = (int)LogLevelFetcher.Fetch(entity);</span><br><span class="line">                     entity.LogLevelTag = (int)logTag.Category;</span><br><span class="line">                 &#125;);</span><br><span class="line">                 bulkAction.Bulk(indices.Indices(prefix, lastDate, lastDate)[0], _mapping, debugEntities, (e) =&gt;</span><br><span class="line">                 &#123;</span><br><span class="line">                     var tmp = e as DebugEntity;</span><br><span class="line">                     return new ValueTuple&lt;string, string, object, string, string, int, int&gt;(tmp.LogGuid, tmp.ApplicationName, tmp, string.Empty, string.Empty, 0, 0);</span><br><span class="line">                 &#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="设计优点"><a href="#设计优点" class="headerlink" title="设计优点"></a>设计优点</h1><h5 id="2-1并发设计采用线程安全的队列"><a href="#2-1并发设计采用线程安全的队列" class="headerlink" title="2.1并发设计采用线程安全的队列"></a>2.1并发设计采用线程安全的队列</h5><h5 id="2-2基础服务SDK减少依赖包引用"><a href="#2-2基础服务SDK减少依赖包引用" class="headerlink" title="2.2基础服务SDK减少依赖包引用"></a>2.2基础服务SDK减少依赖包引用</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">作为基础服务，北森全应用会引入此SDK，为了后续升级方便，且避免依赖包版本不兼容问题，减少依赖，能不依赖的就不依赖</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kakfa的生产端和消费端自己内置了一套，避免依赖Kafka 的BeisenSDK</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-链接池化，kafka的链接使用连接池，避免频繁创建socket链接"><a href="#2-3-链接池化，kafka的链接使用连接池，避免频繁创建socket链接" class="headerlink" title="2.3.链接池化，kafka的链接使用连接池，避免频繁创建socket链接"></a>2.3.链接池化，kafka的链接使用连接池，避免频繁创建socket链接</h5><h5 id="2-4-日志服务写入存储对象时，避免频繁写入造成的IO调用的耗时，影响应用的吞吐量，采用异步队列的方式，进行日志的kafka消息发送"><a href="#2-4-日志服务写入存储对象时，避免频繁写入造成的IO调用的耗时，影响应用的吞吐量，采用异步队列的方式，进行日志的kafka消息发送" class="headerlink" title="2.4.日志服务写入存储对象时，避免频繁写入造成的IO调用的耗时，影响应用的吞吐量，采用异步队列的方式，进行日志的kafka消息发送"></a>2.4.日志服务写入存储对象时，避免频繁写入造成的IO调用的耗时，影响应用的吞吐量，采用异步队列的方式，进行日志的kafka消息发送</h5><h5 id="2-5开关等变量信息，采用配置文件存储。针对Beisen的配置中心，采用Beisen-Configuration"><a href="#2-5开关等变量信息，采用配置文件存储。针对Beisen的配置中心，采用Beisen-Configuration" class="headerlink" title="2.5开关等变量信息，采用配置文件存储。针对Beisen的配置中心，采用Beisen.Configuration"></a>2.5开关等变量信息，采用配置文件存储。针对Beisen的配置中心，采用Beisen.Configuration</h5><h1 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h1><h4 id="2-1-ConcurrentQueue-lt-T-gt-队列详解"><a href="#2-1-ConcurrentQueue-lt-T-gt-队列详解" class="headerlink" title="2.1 ConcurrentQueue&lt;T&gt;队列详解"></a>2.1 <code>ConcurrentQueue&lt;T&gt;队列详解</code></h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/liunianqingshi/article/details/79025818">c#高效的线程安全队列</a></p>
+<h4 id="2-2-BlockingCollection-lt-T-gt-详解"><a href="#2-2-BlockingCollection-lt-T-gt-详解" class="headerlink" title="2.2 BlockingCollection&lt;T&gt;详解"></a>2.2 <code>BlockingCollection&lt;T&gt;详解</code></h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/standard/collections/thread-safe/blockingcollection-overview">MSDN BlockingCollection 概述</a></p>
+<h4 id="2-3-ES的Bulk写入"><a href="#2-3-ES的Bulk写入" class="headerlink" title="2.3 ES的Bulk写入"></a>2.3 ES的Bulk写入</h4><p><a target="_blank" rel="noopener" href="https://jishuin.proginn.com/p/763bfbd54dfd">ES写入优化</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1507035">ES最佳性能优化</a></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/03/beisen-logging/" data-id="ckua102n00000m4uj4jjdf40m" data-title="beisen logging" class="article-share-link">Teilen</a>
+      <a data-url="http://example.com/2021/10/03/beisen-logging/" data-id="ckua102n00000m4uj4jjdf40m" data-title="beisen logging" class="article-share-link">Compartir</a>
       
       
       
@@ -109,7 +157,7 @@
   
   
     <a href="/2021/10/03/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
+      <strong class="article-nav-caption">Viejo</strong>
       <div class="article-nav-title">Hello World</div>
     </a>
   
@@ -133,7 +181,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archivos</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li></ul>
     </div>
@@ -143,7 +191,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Posts recientes</h3>
     <div class="widget">
       <ul>
         
@@ -169,7 +217,7 @@
     <div id="footer-info" class="inner">
       
       &copy; 2021 junjie cheng<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+      Construido por <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

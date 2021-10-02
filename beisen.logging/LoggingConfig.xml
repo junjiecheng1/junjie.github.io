@@ -1,0 +1,25 @@
+<LoggingConfig majorVersion="1" minorVersion="1">
+  <SendKafka>true</SendKafka>
+  <LogLogSendKafka>true</LogLogSendKafka>
+  <MaxLogEventQueueDepth>10000</MaxLogEventQueueDepth>
+  <MaxErrorEventQueueDepth>10000</MaxErrorEventQueueDepth>
+  <MaxWarnEventQueueDepth>10000</MaxWarnEventQueueDepth>
+  <MaxInfoEventQueueDepth>10000</MaxInfoEventQueueDepth>
+  <MaxDebugEventQueueDepth>10000</MaxDebugEventQueueDepth>
+  <MaxLogLogEventQueueDepth>10000</MaxLogLogEventQueueDepth>
+  <MaxMessageLimitLength>5000</MaxMessageLimitLength>
+  <MaxErrorMessageLimitLength>20000</MaxErrorMessageLimitLength>
+  <MaxErrorInnerMessageLimitLength>20000</MaxErrorInnerMessageLimitLength>
+  <SendFilter>
+    <Error>
+      <Application name="Beisen.Sentry.ErrorIndex.WindowsService" filter="true"/>
+      <Application name="Beisen.Sentry.DebugIndex.WindowsService" filter="true"/>
+      <Application name="Beisen.Sentry.WarnIndex.WindowsService" filter="true"/>
+    </Error>
+    <Debug/>
+    <Warn/>
+  </SendFilter>
+  <LogProvider>
+    <Level>Error</Level>
+  </LogProvider>
+</LoggingConfig>
